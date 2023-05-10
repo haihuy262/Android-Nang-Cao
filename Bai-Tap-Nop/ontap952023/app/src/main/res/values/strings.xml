@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ontap952023</string>
+    <string name="avatar">avatar</string>
+    <string name="add">Add</string>
 </resources>
