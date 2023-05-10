@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tieuDe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sửa Danh Bạ"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp" />
+
+    <ImageView
+        android:id="@+id/imgUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/user"
+        android:layout_below="@+id/tieuDe"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp" />
+
+    <EditText
+        android:id="@+id/editHoTen"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_toEndOf="@+id/imgUser"
+        android:layout_below="@+id/tieuDe"
+        android:hint="Họ tên"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/edit_text_background"
+        android:paddingStart="15dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imgPhoneCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/phone_call"
+        android:layout_below="@+id/imgUser"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp" />
+
+    <EditText
+        android:id="@+id/editSoDienThoai"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editHoTen"
+        android:layout_toEndOf="@id/imgPhoneCall"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginTop="20dp"
+        android:hint="Số điện thoại"
+        android:paddingStart="15dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imgEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/gmail"
+        android:layout_below="@+id/imgPhoneCall"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="32dp" />
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="270dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/editSoDienThoai"
+        android:layout_toEndOf="@id/imgEmail"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginTop="20dp"
+        android:paddingStart="15dp"
+        android:textStyle="bold"
+        android:hint="Email" />
+
+    <ImageView
+        android:id="@+id/imgNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pencil"
+        android:layout_below="@+id/imgEmail"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="54dp" />
+
+    <EditText
+        android:id="@+id/editGhiChu"
+        android:layout_width="270dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/editEmail"
+        android:layout_toEndOf="@id/imgNote"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/edit_text_background"
+        android:layout_marginTop="20dp"
+        android:hint="Nội dung ghi chú"
+        android:padding="15dp"
+        android:textStyle="italic" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/editDanhBa"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/imgNote"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="20dp"
+        android:text="Sửa"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:background="@drawable/button_background" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnHuyEdit"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:background="@drawable/button_background"
+        android:layout_below="@+id/imgNote"
+        android:layout_toEndOf="@+id/editDanhBa"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="20dp"
+        android:text="Huỷ"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+</RelativeLayout>

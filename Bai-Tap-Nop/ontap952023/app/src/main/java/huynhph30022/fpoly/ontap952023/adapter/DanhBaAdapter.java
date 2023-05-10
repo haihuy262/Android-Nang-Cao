@@ -2,26 +2,36 @@ package huynhph30022.fpoly.ontap952023.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import huynhph30022.fpoly.ontap952023.R;
+import huynhph30022.fpoly.ontap952023.activity.SuaLienHe;
+import huynhph30022.fpoly.ontap952023.database.DanhBaDAO;
 import huynhph30022.fpoly.ontap952023.model.DanhBa;
 
 public class DanhBaAdapter extends RecyclerView.Adapter<DanhBaAdapter.ViewHolder> {
     private final Context context;
     private ArrayList<DanhBa> list;
+    private final DanhBaDAO danhBaDAO;
 
     public DanhBaAdapter(Context context) {
         this.context = context;
+        danhBaDAO = new DanhBaDAO(context);
     }
 
     public void setData(ArrayList<DanhBa> list) {
@@ -45,6 +55,51 @@ public class DanhBaAdapter extends RecyclerView.Adapter<DanhBaAdapter.ViewHolder
         }
         holder.hoTen.setText(danhBa.getHoTen());
         holder.soDienThoai.setText(danhBa.getDienThoai());
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context, v);
+                MenuInflater menuInflater = popupMenu.getMenuInflater();
+                menuInflater.inflate(R.menu.menu, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (item.getItemId() == R.id.menu_xoa) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Thông báo");
+                            builder.setMessage("Bạn có muốn xoá liên hệ này không?");
+                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    boolean check = danhBaDAO.deleteDatabase(list.get(holder.getAdapterPosition()).getIdDanhBa());
+                                    if (check) {
+                                        Toast.makeText(context, "Đã xoá liên hệ", Toast.LENGTH_SHORT).show();
+                                        loadData();
+                                    } else {
+                                        Toast.makeText(context, "Xoá thất bại!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                            builder.setNegativeButton("No", null);
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        } else if (item.getItemId() == R.id.menu_sua) {
+                            Intent intent = new Intent(context, SuaLienHe.class);
+                            intent.putExtra("idDanhBa", list.get(holder.getAdapterPosition()).getIdDanhBa());
+                            intent.putExtra("hoTen", list.get(holder.getAdapterPosition()).getHoTen());
+                            intent.putExtra("soDienThoai", list.get(holder.getAdapterPosition()).getDienThoai());
+                            intent.putExtra("email", list.get(holder.getAdapterPosition()).getEmail());
+                            intent.putExtra("ghiChu", list.get(holder.getAdapterPosition()).getGhiChu());
+                            context.startActivity(intent);
+                        }
+                        return true;
+                    }
+                });
+                popupMenu.show();
+                return false;
+            }
+        });
 
         // Hien thi Dialog
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +134,12 @@ public class DanhBaAdapter extends RecyclerView.Adapter<DanhBaAdapter.ViewHolder
                 });
             }
         });
+    }
+
+    private void loadData() {
+        list.clear();
+        list = danhBaDAO.getAllDatabase();
+        notifyDataSetChanged();
     }
 
     @Override

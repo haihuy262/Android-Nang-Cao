@@ -22,19 +22,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="20dp"
             android:text="Chi Tiết Danh Bạ"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imgUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/user"
             android:layout_below="@+id/tieuDe"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp" />
 
         <TextView
@@ -44,21 +44,21 @@
             android:layout_toEndOf="@+id/imgUser"
             android:layout_below="@+id/tieuDe"
             android:text="Họ tên"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/edit_text_background"
             android:paddingStart="15dp"
-            android:paddingTop="12dp"
-            android:textSize="18sp"
+            android:paddingTop="15dp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imgPhoneCall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/phone_call"
             android:layout_below="@+id/imgUser"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp" />
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="45dp" />
 
         <TextView
             android:id="@+id/ctSoDienThoai"
@@ -66,23 +66,23 @@
             android:layout_height="50dp"
             android:layout_below="@+id/ctHoTen"
             android:layout_toEndOf="@id/imgPhoneCall"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/edit_text_background"
             android:layout_marginTop="20dp"
             android:text="Số điện thoại"
             android:paddingStart="15dp"
-            android:paddingTop="12dp"
-            android:textSize="18sp"
+            android:paddingTop="15dp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imgEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/gmail"
             android:layout_below="@+id/imgPhoneCall"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="32dp" />
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="43dp" />
 
         <TextView
             android:id="@+id/ctEmail"
@@ -90,22 +90,22 @@
             android:layout_height="50dp"
             android:layout_below="@+id/ctSoDienThoai"
             android:layout_toEndOf="@id/imgEmail"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/edit_text_background"
             android:layout_marginTop="20dp"
             android:paddingStart="15dp"
-            android:paddingTop="12dp"
-            android:textSize="18sp"
+            android:paddingTop="15dp"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:text="Email" />
 
         <ImageView
             android:id="@+id/imgNote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/pencil"
             android:layout_below="@+id/imgEmail"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="54dp" />
 
         <TextView
@@ -114,13 +114,13 @@
             android:layout_height="100dp"
             android:layout_below="@+id/ctEmail"
             android:layout_toEndOf="@id/imgNote"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:background="@drawable/edit_text_background"
             android:layout_marginTop="20dp"
             android:text="Nội dung ghi chú"
-            android:textSize="18sp"
+            android:textSize="15sp"
             android:paddingStart="15dp"
-            android:paddingTop="12dp"
+            android:paddingTop="15dp"
             android:textStyle="italic" />
 
     </RelativeLayout>
