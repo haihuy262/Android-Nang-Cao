@@ -1,24 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvTenBaiHat"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Tên bài hát"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:id="@+id/linearLayout"
+        android:gravity="center"
+        android:layout_marginTop="30dp">
+
+        <TextView
+            android:id="@+id/tvTieuDe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên bài hát"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:id="@+id/imgPlayMusic"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/play" />
+
+            <ImageView
+                android:id="@+id/imgPauseMusic"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/pause"
+                android:layout_marginStart="20dp" />
+
+            <ImageView
+                android:id="@+id/imgStopMusic"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/stop"
+                android:layout_marginStart="20dp" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/tvTenBaiHat" />
+        android:layout_below="@+id/linearLayout" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -26,6 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="40dp" />
+        android:layout_margin="40dp"
+        android:src="@drawable/add_music"
+        android:backgroundTint="#1DE9B6" />
 
 </RelativeLayout>

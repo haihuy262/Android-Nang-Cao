@@ -1,5 +1,6 @@
 package huynhph30022.fpoly.music.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -31,5 +32,14 @@ public class MusicDAO {
         }
         cursor.close();
         return list;
+    }
+
+    public boolean addDatabase(Music obj) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("ten", obj.getTenNhac());
+        values.put("link", obj.getLinkNhac());
+        long check = db.insert("MP3", null, values);
+        return check != 1;
     }
 }

@@ -12,16 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import huynhph30022.fpoly.music.MainActivity;
 import huynhph30022.fpoly.music.R;
 import huynhph30022.fpoly.music.model.Music;
+import huynhph30022.fpoly.music.service.MusicService;
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> {
     private final Context context;
     private ArrayList<Music> list;
+    private TextView tvTieuDe;
 
-    public MusicAdapter(Context context) {
+    public MusicAdapter(Context context, TextView tvTieuDe) {
         this.context = context;
+        this.tvTieuDe = tvTieuDe;
     }
 
     public void setData(ArrayList<Music> list) {
@@ -44,6 +46,17 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
             return;
         }
         holder.tvTenBaiHat.setText(music.getTenNhac());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String title = list.get(holder.getAdapterPosition()).getTenNhac();
+                tvTieuDe.setText(title);
+
+                Intent intent = new Intent(context, MusicService.class);
+                intent.putExtra("musicUri", list.get(holder.getAdapterPosition()).getLinkNhac());
+                context.startService(intent);
+            }
+        });
     }
 
     @Override
