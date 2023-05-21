@@ -14,7 +14,7 @@ public class DbHelper extends SQLiteOpenHelper {
         String createTableMusic = "CREATE TABLE IF NOT EXISTS MP3 (id INTEGER PRIMARY KEY AUTOINCREMENT, ten TEXT, link TEXT)";
         db.execSQL(createTableMusic);
 
-        db.execSQL("INSERT INTO MP3 VALUES (1,'Giữ Em Thật Lâu','https://www.nhaccuatui.com/bai-hat/giu-em-that-lau-naod.TPDciU83yMeU.html')");
+        db.execSQL("INSERT INTO MP3 VALUES (1,'Ngựa Hí','https://www.w3schools.com/html/horse.mp3')");
     }
 
     @Override

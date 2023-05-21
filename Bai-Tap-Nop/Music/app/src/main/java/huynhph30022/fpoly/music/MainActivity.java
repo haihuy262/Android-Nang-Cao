@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Music> list;
     FloatingActionButton fab;
+    boolean check = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,19 +102,25 @@ public class MainActivity extends AppCompatActivity {
         imgPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (!check) {
+                    startService(intent);
+                    check = true;
+                }
             }
         });
         imgPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (check) {
+                    startService(intent);
+                    check = false;
+                }
             }
         });
         imgStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                stopService(intent);
             }
         });
     }

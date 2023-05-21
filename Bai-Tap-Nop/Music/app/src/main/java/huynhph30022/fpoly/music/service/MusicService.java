@@ -7,22 +7,15 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import java.io.IOException;
 
 public class MusicService extends Service {
-    private MediaPlayer mediaPlayer;
-    private String currentMusicUri;
-    private boolean isPaused = false;
-    private final IBinder binder = new MusicBinder();
-
-    public class MusicBinder extends Binder {
-        MusicService getService() {
-            return MusicService.this;
-        }
-    }
+    MediaPlayer mediaPlayer;
+    String currentMusicUri;
 
     @Override
     public void onCreate() {
@@ -35,6 +28,14 @@ public class MusicService extends Service {
         String musicUri = intent.getStringExtra("musicUri");
         if (musicUri != null) {
             playMusic(musicUri);
+            mediaPlayer.start();
+            Toast.makeText(this, "Bắt Đầu Phát Nhạc", Toast.LENGTH_SHORT).show();
+        } else if (mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+            Toast.makeText(this, "Dừng Nhạc", Toast.LENGTH_SHORT).show();
+        } else {
+            mediaPlayer.start();
+            Toast.makeText(this, "Tiếp Tục Nhạc", Toast.LENGTH_SHORT).show();
         }
         return START_NOT_STICKY;
     }
@@ -49,40 +50,22 @@ public class MusicService extends Service {
             mediaPlayer.prepare();
             mediaPlayer.start();
             currentMusicUri = musicUri;
-            isPaused = false;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void pauseMusic() {
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.pause();
-            isPaused = true;
-        }
-    }
-
-    public void resumeMusic() {
-        if (isPaused) {
-            mediaPlayer.start();
-            isPaused = false;
-        }
-    }
-
-    public void stopMusic() {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         mediaPlayer.stop();
-        mediaPlayer.reset();
-        currentMusicUri = null;
-        isPaused = false;
-    }
-
-    public String getCurrentMusicUri() {
-        return currentMusicUri;
+        mediaPlayer.release();
+        Toast.makeText(this, "Tắt Nhạc", Toast.LENGTH_SHORT).show();
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return binder;
+        return null;
     }
 }
