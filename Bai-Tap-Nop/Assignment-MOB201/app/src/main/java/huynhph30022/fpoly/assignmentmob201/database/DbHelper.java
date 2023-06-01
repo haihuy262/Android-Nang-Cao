@@ -6,16 +6,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
     public DbHelper(Context context) {
-        super(context, "QLUD.db", null, 1);
+        super(context, "quanlyungdung.db", null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        String createTableUser = "CREATE TABLE IF NOT EXISTS User(soDienThoai TEXT PRIMARY KEY, matKhau TEXT)";
+        db.execSQL(createTableUser);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if (oldVersion != newVersion) {
+            db.execSQL("DROP TABLE IF EXISTS User");
+        }
     }
 }
