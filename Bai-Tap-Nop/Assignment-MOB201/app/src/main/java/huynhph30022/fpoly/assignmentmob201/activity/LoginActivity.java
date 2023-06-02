@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (checkLogin) {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else {
-                    Log.e("LoginActivity", "Sai tài khoản mật khẩu");
+                    Toast.makeText(LoginActivity.this, "Sai tài khoản mật khẩu", Toast.LENGTH_SHORT).show();
                 }
 
             }

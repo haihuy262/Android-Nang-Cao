@@ -31,11 +31,11 @@ public class UserDAO {
         return checkLogin;
     }
 
-    public boolean checkNhapLaiMatKhau(String matKhau) {
+    public boolean checkSDT(String soDienThoai) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE matKhau =?", new String[]{matKhau});
-        boolean checkNhapLaiMatKhau = cursor.getCount() > 0;
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE soDienThoai =?", new String[]{soDienThoai});
+        boolean check = cursor.getCount() > 0;
         cursor.close();
-        return checkNhapLaiMatKhau;
+        return check;
     }
 }
