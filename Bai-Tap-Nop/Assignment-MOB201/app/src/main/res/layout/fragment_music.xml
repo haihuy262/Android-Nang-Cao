@@ -1,19 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayoutMusic"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnStartService"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Start Service" />
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnStopService"
+    <TextView
+        android:id="@+id/song_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stop Service" />
-</LinearLayout>
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:ellipsize="marquee"
+        android:padding="10dp"
+        android:text="Danh sách bài hát"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerMusic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/controlMusic"
+        android:layout_below="@+id/song_title" />
+
+    <RelativeLayout
+        android:id="@+id/controlMusic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom1"
+        android:padding="5dp"
+        android:visibility="gone">
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:id="@+id/current_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/seekBar"
+            android:layout_alignParentStart="true"
+            android:layout_margin="20dp"
+            android:text="0:00" />
+
+        <TextView
+            android:id="@+id/total_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/seekBar"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="20dp"
+            android:text="0:00" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/total_time"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/imgPrevious"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/baseline_skip_previous_24" />
+
+            <ImageView
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/baseline_skip_next_24" />
+
+            <ImageView
+                android:id="@+id/play_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/baseline_pause_circle_outline_24" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</RelativeLayout>

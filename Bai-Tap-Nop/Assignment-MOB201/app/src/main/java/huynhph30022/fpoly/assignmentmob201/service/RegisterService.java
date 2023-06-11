@@ -11,7 +11,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import huynhph30022.fpoly.assignmentmob201.dao.UserDAO;
 
 public class RegisterService extends Service {
-    UserDAO userDAO;
+    protected UserDAO userDAO;
 
     @Nullable
     @Override

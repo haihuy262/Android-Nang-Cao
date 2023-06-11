@@ -3,47 +3,40 @@ package huynhph30022.fpoly.assignmentmob201.model;
 import java.io.Serializable;
 
 public class Song implements Serializable {
-    private String title;
-    private String single;
-    private int image;
-    private int resource;
+    private int id;
+    private String tenBaiHat;
+    private String link;
 
-    public Song(String title, String single, int image, int resource) {
-        this.title = title;
-        this.single = single;
-        this.image = image;
-        this.resource = resource;
+    public Song() {
     }
 
-    public String getTitle() {
-        return title;
+    public Song(int id, String tenBaiHat, String link) {
+        this.id = id;
+        this.tenBaiHat = tenBaiHat;
+        this.link = link;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public int getId() {
+        return id;
     }
 
-    public String getSingle() {
-        return single;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setSingle(String single) {
-        this.single = single;
+    public String getTenBaiHat() {
+        return tenBaiHat;
     }
 
-    public int getImage() {
-        return image;
+    public void setTenBaiHat(String tenBaiHat) {
+        this.tenBaiHat = tenBaiHat;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public String getLink() {
+        return link;
     }
 
-    public int getResource() {
-        return resource;
-    }
-
-    public void setResource(int resource) {
-        this.resource = resource;
+    public void setLink(String link) {
+        this.link = link;
     }
 }
