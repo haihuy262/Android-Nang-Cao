@@ -4,7 +4,6 @@ package huynhph30022.fpoly.assignmentmob201.service;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -32,7 +31,7 @@ public class RegisterService extends Service {
         stopSelf();
         return super.onStartCommand(intent, flags, startId);
     }
-    
+
     private boolean themTaiKhoan(String soDienThoai, String matKhau) {
         userDAO = new UserDAO(this);
         return userDAO.insertUser(soDienThoai, matKhau);
