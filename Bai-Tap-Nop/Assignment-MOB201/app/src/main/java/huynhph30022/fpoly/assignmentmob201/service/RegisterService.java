@@ -29,7 +29,7 @@ public class RegisterService extends Service {
             ketQuaDangKy(themTaiKhoan);
         }
         stopSelf();
-        return super.onStartCommand(intent, flags, startId);
+        return START_NOT_STICKY;
     }
 
     private boolean themTaiKhoan(String soDienThoai, String matKhau) {

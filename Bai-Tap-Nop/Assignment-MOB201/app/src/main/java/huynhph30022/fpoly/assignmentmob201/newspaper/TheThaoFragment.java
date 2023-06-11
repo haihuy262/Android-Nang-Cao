@@ -1,66 +1,78 @@
 package huynhph30022.fpoly.assignmentmob201.newspaper;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+
 import huynhph30022.fpoly.assignmentmob201.R;
+import huynhph30022.fpoly.assignmentmob201.adapter.NewspaperAdapter;
+import huynhph30022.fpoly.assignmentmob201.model.Newspaper;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TheThaoFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class TheThaoFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public TheThaoFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TheThaoFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TheThaoFragment newInstance(String param1, String param2) {
-        TheThaoFragment fragment = new TheThaoFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    protected DownloadTinTuc downloadTinTuc;
+    private RecyclerView recyclerViewTheThao;
+    private NewspaperAdapter adapter;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_the_thao, container, false);
+        downloadTinTuc = new DownloadTinTuc(this);
+        recyclerViewTheThao = view.findViewById(R.id.recyclerView_theThao);
+        adapter = new NewspaperAdapter(requireContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
+        recyclerViewTheThao.setLayoutManager(layoutManager);
+
+        String urlRss = "https://vnexpress.net/rss/the-thao.rss";
+        downloadTinTuc.execute(urlRss);
+        return view;
+    }
+
+    private class DownloadTinTuc extends AsyncTask<String, Void, ArrayList<Newspaper>> {
+        TheThaoFragment theThaoFragment = null;
+
+        public DownloadTinTuc(TheThaoFragment theThaoFragment) {
+            this.theThaoFragment = theThaoFragment;
         }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_the_thao, container, false);
+        @Override
+        protected ArrayList<Newspaper> doInBackground(String... strings) {
+            TinTucLoader tinTucLoader = new TinTucLoader();
+            ArrayList<Newspaper> list = new ArrayList<>();
+            String urlRss = strings[0];
+            try {
+                URL url = new URL(urlRss);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                if (connection.getResponseCode() == 200) {
+                    InputStream inputStream = connection.getInputStream();
+                    list = tinTucLoader.getTinTucList(inputStream);
+                }
+            } catch (IOException | XmlPullParserException e) {
+                throw new RuntimeException(e);
+            }
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Newspaper> newspapers) {
+            super.onPostExecute(newspapers);
+            adapter.setData(newspapers);
+            recyclerViewTheThao.setAdapter(adapter);
+        }
     }
 }

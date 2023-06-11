@@ -42,7 +42,7 @@ public class KhoaHocFragment extends Fragment {
         return view;
     }
 
-    public class DownloadTinTuc extends AsyncTask<String, Void, ArrayList<Newspaper>> {
+    private class DownloadTinTuc extends AsyncTask<String, Void, ArrayList<Newspaper>> {
         KhoaHocFragment khoaHocFragment = null;
 
         public DownloadTinTuc(KhoaHocFragment khoaHocFragment) {

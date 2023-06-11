@@ -1,9 +1,11 @@
 package huynhph30022.fpoly.assignmentmob201.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,17 +19,13 @@ import huynhph30022.fpoly.assignmentmob201.adapter.ViewPager2Adapter;
 public class MainActivity extends AppCompatActivity {
     ViewPager2 viewPager2;
     NavigationBarView navigationBarView;
-    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         viewPager2 = findViewById(R.id.viewPager2);
         navigationBarView = findViewById(R.id.bottomNav);
-        fab = findViewById(R.id.fab);
-
         navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -57,11 +55,9 @@ public class MainActivity extends AppCompatActivity {
                 super.onPageSelected(position);
                 if (position == 0) {
                     navigationBarView.getMenu().findItem(R.id.action_music).setChecked(true);
-                    fab.setVisibility(View.VISIBLE);
                 }
                 if (position == 1) {
                     navigationBarView.getMenu().findItem(R.id.action_favorite).setChecked(true);
-                    fab.setVisibility(View.INVISIBLE);
                 }
                 if (position == 2) {
                     navigationBarView.getMenu().findItem(R.id.action_newspaper).setChecked(true);
@@ -71,5 +67,23 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("Thông báo!");
+        builder.setMessage("Bạn có chắc muốn thoát không?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                MainActivity.super.onBackPressed();
+                finish();
+            }
+        });
+        builder.setNegativeButton("Không", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

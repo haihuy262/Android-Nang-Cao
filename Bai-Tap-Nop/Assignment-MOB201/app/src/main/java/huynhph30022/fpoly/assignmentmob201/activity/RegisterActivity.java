@@ -20,20 +20,21 @@ import huynhph30022.fpoly.assignmentmob201.dao.UserDAO;
 import huynhph30022.fpoly.assignmentmob201.service.RegisterService;
 
 public class RegisterActivity extends AppCompatActivity {
-    AppCompatEditText edSoDienThoai, edMatKhau, edReMatKhau;
-    AppCompatButton btnDangKy;
-    UserDAO userDAO;
-    BroadcastReceiver receiver = new BroadcastReceiver() {
+    protected AppCompatButton btnDangKy;
+    protected UserDAO userDAO;
+    protected BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             boolean isKetQua = intent.getBooleanExtra("isKetQua", false);
             if (isKetQua) {
                 Toast.makeText(context, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                finish();
             } else {
                 Toast.makeText(context, "Đăng ký thất bại!", Toast.LENGTH_SHORT).show();
             }
         }
     };
+    private AppCompatEditText edSoDienThoai, edMatKhau, edReMatKhau;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

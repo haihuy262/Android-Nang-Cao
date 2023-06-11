@@ -1,6 +1,7 @@
 package huynhph30022.fpoly.assignmentmob201.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import huynhph30022.fpoly.assignmentmob201.R;
 import huynhph30022.fpoly.assignmentmob201.model.Newspaper;
+import huynhph30022.fpoly.assignmentmob201.newspaper.WebViewActivity;
 
 public class NewspaperAdapter extends RecyclerView.Adapter<NewspaperAdapter.ViewHolder> {
     private final Context context;
@@ -47,7 +52,11 @@ public class NewspaperAdapter extends RecyclerView.Adapter<NewspaperAdapter.View
             return;
         }
         holder.tvTitleNews.setText(objNewspaper.getTitle());
+        holder.tvThoiGian.setText(objNewspaper.getPubDate());
         String description = objNewspaper.getDescription();
+        Document document = Jsoup.parse(description);
+        String text = document.text();
+        holder.tvSubTitleNews.setText(text);
         Pattern pattern = Pattern.compile("src=\"(.*?)\"");
         Matcher matcher = pattern.matcher(description);
         String url_image = "";
@@ -55,6 +64,15 @@ public class NewspaperAdapter extends RecyclerView.Adapter<NewspaperAdapter.View
             url_image = matcher.group(1);
         }
         Glide.with(context).load(url_image).into(holder.imgNews);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Newspaper objNewspaper = list.get(holder.getAdapterPosition());
+                Intent intent = new Intent(context, WebViewActivity.class);
+                intent.putExtra("link", objNewspaper.getLink());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -67,12 +85,14 @@ public class NewspaperAdapter extends RecyclerView.Adapter<NewspaperAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgNews;
-        TextView tvTitleNews;
+        TextView tvTitleNews, tvThoiGian, tvSubTitleNews;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgNews = itemView.findViewById(R.id.imgNews);
             tvTitleNews = itemView.findViewById(R.id.tvTitleNews);
+            tvThoiGian = itemView.findViewById(R.id.tvThoiGian);
+            tvSubTitleNews = itemView.findViewById(R.id.tvSubTitleNews);
         }
     }
 }
