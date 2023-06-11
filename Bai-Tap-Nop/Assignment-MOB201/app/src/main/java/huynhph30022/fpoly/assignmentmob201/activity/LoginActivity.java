@@ -33,15 +33,15 @@ public class LoginActivity extends AppCompatActivity {
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String soDienThoai = Objects.requireNonNull(edSoDienThoai.getText()).toString().trim();
-                String matKhau = Objects.requireNonNull(edMatKhau.getText()).toString().trim();
-                boolean checkLogin = userDAO.checkLogin(soDienThoai, matKhau);
-                if (checkLogin) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                } else {
-                    Toast.makeText(LoginActivity.this, "Sai tài khoản mật khẩu", Toast.LENGTH_SHORT).show();
-                }
-
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                String soDienThoai = Objects.requireNonNull(edSoDienThoai.getText()).toString().trim();
+//                String matKhau = Objects.requireNonNull(edMatKhau.getText()).toString().trim();
+//                boolean checkLogin = userDAO.checkLogin(soDienThoai, matKhau);
+//                if (checkLogin) {
+//                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+//                } else {
+//                    Toast.makeText(LoginActivity.this, "Sai tài khoản mật khẩu", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
