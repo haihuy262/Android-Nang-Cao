@@ -18,10 +18,10 @@ public class MusicService extends Service {
     public static final String ACTION_UPDATE_UI = "huynhph30022.fpoly.UPDATE_UI";
     public static final String ACTION_PLAY_SONG = "huynhph30022.fpoly.ACTION_PLAY";
     public static final String ACTION_STOP_SONG = "huynhph30022.fpoly.ACTION_STOP";
+    public MediaPlayer mediaPlayer;
     protected int totalTime;
     protected int currentTime;
     MyBinder binder = new MyBinder();
-    private MediaPlayer mediaPlayer;
     private Handler handler;
     private Runnable runnable;
     private boolean isPlaying = false;

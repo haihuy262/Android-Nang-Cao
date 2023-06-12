@@ -110,7 +110,6 @@ public class MusicFragment extends Fragment {
         list = musicDAO.getAllDatabase();
         adapter.setData(list);
         recyclerViewMusic.setAdapter(adapter);
-
         imgPlayOrPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,6 +120,24 @@ public class MusicFragment extends Fragment {
                     musicService.pauseOrPlay();
                     imgPlayOrPause.setImageResource(R.drawable.baseline_pause_circle_outline_24);
                 }
+            }
+        });
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (musicService.mediaPlayer != null && fromUser) {
+                    musicService.mediaPlayer.seekTo(progress);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
         return view;
@@ -145,5 +162,14 @@ public class MusicFragment extends Fragment {
         super.onStart();
         Intent intent = new Intent(requireContext(), MusicService.class);
         requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (isBound) {
+            requireContext().unbindService(connection);
+            isBound = false;
+        }
     }
 }
