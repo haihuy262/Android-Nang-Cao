@@ -80,7 +80,7 @@
                 android:src="@drawable/baseline_skip_previous_24" />
 
             <ImageView
-                android:id="@+id/next"
+                android:id="@+id/imgNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -88,11 +88,11 @@
                 android:src="@drawable/baseline_skip_next_24" />
 
             <ImageView
-                android:id="@+id/play_pause"
+                android:id="@+id/img_play_pause"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/baseline_pause_circle_outline_24" />
+                android:src="@drawable/baseline_play_circle_outline_24" />
         </RelativeLayout>
 
     </RelativeLayout>

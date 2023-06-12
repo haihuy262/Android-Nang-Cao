@@ -1,10 +1,14 @@
 package huynhph30022.fpoly.assignmentmob201.adapter;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,15 +22,18 @@ import huynhph30022.fpoly.assignmentmob201.model.Song;
 import huynhph30022.fpoly.assignmentmob201.service.MusicService;
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> {
+
     private final Context context;
     private final TextView tvTitleBaiHat;
     private final RelativeLayout relativeLayoutControlMusic;
     private ArrayList<Song> list;
+    private ImageView imgPlayOrPause;
 
-    public MusicAdapter(Context context, TextView tvTitleBaiHat, RelativeLayout relativeLayoutControlMusic) {
+    public MusicAdapter(Context context, TextView tvTitleBaiHat, RelativeLayout relativeLayoutControlMusic, ImageView imgPlayOrPause) {
         this.context = context;
         this.tvTitleBaiHat = tvTitleBaiHat;
         this.relativeLayoutControlMusic = relativeLayoutControlMusic;
+        this.imgPlayOrPause = imgPlayOrPause;
     }
 
     public void setData(ArrayList<Song> list) {
@@ -59,9 +66,16 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
                 tvTitleBaiHat.setText(tenBaiHat);
                 tvTitleBaiHat.setVisibility(View.VISIBLE);
                 relativeLayoutControlMusic.setVisibility(View.VISIBLE);
+                imgPlayOrPause.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+
                 Intent intent = new Intent(context, MusicService.class);
+                intent.setAction(MusicService.ACTION_PLAY_SONG);
                 intent.putExtra("link", objSong.getLink());
                 context.startService(intent);
+
+                Intent stopIntent = new Intent(context, MusicService.class);
+                stopIntent.setAction(MusicService.ACTION_STOP_SONG);
+                context.startService(stopIntent);
             }
         });
     }

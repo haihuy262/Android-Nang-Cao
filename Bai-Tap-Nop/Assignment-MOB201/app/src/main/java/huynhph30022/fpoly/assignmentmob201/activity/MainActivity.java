@@ -15,10 +15,12 @@ import com.google.android.material.navigation.NavigationBarView;
 
 import huynhph30022.fpoly.assignmentmob201.R;
 import huynhph30022.fpoly.assignmentmob201.adapter.ViewPager2Adapter;
+import huynhph30022.fpoly.assignmentmob201.service.MusicService;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager2 viewPager2;
     NavigationBarView navigationBarView;
+    MusicService musicService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

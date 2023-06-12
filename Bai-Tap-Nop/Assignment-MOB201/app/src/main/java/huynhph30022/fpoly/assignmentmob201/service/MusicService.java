@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 
@@ -15,39 +16,45 @@ import java.io.IOException;
 public class MusicService extends Service {
     public static final String ACTION_UPDATE_SEEKBAR = "huynhph30022.fpoly.UPDATE_SEEK_BAR";
     public static final String ACTION_UPDATE_UI = "huynhph30022.fpoly.UPDATE_UI";
+    public static final String ACTION_PLAY_SONG = "huynhph30022.fpoly.ACTION_PLAY";
+    public static final String ACTION_STOP_SONG = "huynhph30022.fpoly.ACTION_STOP";
     protected int totalTime;
     protected int currentTime;
+    MyBinder binder = new MyBinder();
     private MediaPlayer mediaPlayer;
     private Handler handler;
     private Runnable runnable;
+    private boolean isPlaying = false;
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return binder;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
-            String musicUri = intent.getStringExtra("link");
-            playMusic(musicUri);
+            String action = intent.getAction();
+            if (action != null) {
+                if (action.equalsIgnoreCase(ACTION_PLAY_SONG)) {
+                    String urlSong = intent.getStringExtra("link");
+                    playMusic(urlSong);
+                }
+            }
         }
         return START_NOT_STICKY;
     }
 
     private void playMusic(String musicUri) {
         Uri uriMusic = Uri.parse(musicUri);
-        mediaPlayer = new MediaPlayer();
-        AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build();
-        mediaPlayer.setAudioAttributes(audioAttributes);
+        stopMusic();
         try {
+            mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(getApplicationContext(), uriMusic);
             mediaPlayer.prepare();
             mediaPlayer.start();
+            isPlaying = true;
 
             totalTime = mediaPlayer.getDuration();
             updateSeekBar(totalTime);
@@ -69,6 +76,15 @@ public class MusicService extends Service {
         }
     }
 
+    private void stopMusic() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+            isPlaying = false;
+        }
+    }
+
     private void updateUI(int currentTime) {
         Intent intent = new Intent(ACTION_UPDATE_UI);
         intent.putExtra("currentTime", currentTime);
@@ -81,13 +97,29 @@ public class MusicService extends Service {
         sendBroadcast(intent);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void pauseOrPlay() {
+        if (mediaPlayer != null && isPlaying) {
+            mediaPlayer.pause();
+            isPlaying = false;
+        } else if (mediaPlayer != null) {
+            mediaPlayer.start();
+            isPlaying = true;
+        }
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public void onDestroy() {
+        super.onDestroy();
+        stopMusic();
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public class MyBinder extends Binder {
+        public MusicService getService() {
+            return MusicService.this;
+        }
     }
 }

@@ -1,19 +1,22 @@
 package huynhph30022.fpoly.assignmentmob201.fragment;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.MediaPlayer;
+import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.IBinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -38,7 +41,22 @@ public class MusicFragment extends Fragment {
     protected RelativeLayout relativeLayoutControlMusic;
     protected LinearLayoutManager layoutManager;
     protected SeekBar seekBar;
-    protected MediaPlayer mediaPlayer;
+    protected ImageView imgPre, imgNext, imgPlayOrPause;
+    protected MusicService musicService;
+    protected boolean isBound = false;
+    protected ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MusicService.MyBinder binder = (MusicService.MyBinder) service;
+            musicService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+        }
+    };
     protected BroadcastReceiver updateSeekBarReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -67,24 +85,6 @@ public class MusicFragment extends Fragment {
     private void updateSeekBar(int totalTime) {
         seekBar.setMax(totalTime);
         tvTotalTime.setText(formatTime(totalTime));
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (fromUser) {
-                    mediaPlayer.seekTo(progress);
-                }
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
     }
 
     @Override
@@ -97,16 +97,32 @@ public class MusicFragment extends Fragment {
         seekBar = view.findViewById(R.id.seekBar);
         tvCurrentTime = view.findViewById(R.id.current_time);
         tvTotalTime = view.findViewById(R.id.total_time);
+        imgPlayOrPause = view.findViewById(R.id.img_play_pause);
+        imgNext = view.findViewById(R.id.imgNext);
+        imgPre = view.findViewById(R.id.imgPrevious);
 
         musicDAO = new MusicDAO(requireContext());
         list = new ArrayList<>();
-        adapter = new MusicAdapter(requireContext(), tvTitleBaiHat, relativeLayoutControlMusic);
+        adapter = new MusicAdapter(requireContext(), tvTitleBaiHat, relativeLayoutControlMusic, imgPlayOrPause);
         layoutManager = new LinearLayoutManager(requireContext());
 
         recyclerViewMusic.setLayoutManager(layoutManager);
         list = musicDAO.getAllDatabase();
         adapter.setData(list);
         recyclerViewMusic.setAdapter(adapter);
+
+        imgPlayOrPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (musicService.isPlaying()) {
+                    musicService.pauseOrPlay();
+                    imgPlayOrPause.setImageResource(R.drawable.baseline_play_circle_outline_24);
+                } else {
+                    musicService.pauseOrPlay();
+                    imgPlayOrPause.setImageResource(R.drawable.baseline_pause_circle_outline_24);
+                }
+            }
+        });
         return view;
     }
 
@@ -122,5 +138,12 @@ public class MusicFragment extends Fragment {
         super.onPause();
         requireActivity().unregisterReceiver(updateSeekBarReceiver);
         requireActivity().unregisterReceiver(updateUIReceiver);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Intent intent = new Intent(requireContext(), MusicService.class);
+        requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE);
     }
 }
