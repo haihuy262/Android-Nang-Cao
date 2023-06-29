@@ -140,6 +140,12 @@ public class MusicFragment extends Fragment {
 
             }
         });
+        imgNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return view;
     }
 

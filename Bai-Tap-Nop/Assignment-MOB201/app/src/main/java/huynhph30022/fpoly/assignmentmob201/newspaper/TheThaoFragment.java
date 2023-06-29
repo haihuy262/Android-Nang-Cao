@@ -37,7 +37,7 @@ public class TheThaoFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         recyclerViewTheThao.setLayoutManager(layoutManager);
 
-        String urlRss = "https://vnexpress.net/rss/the-thao.rss";
+            String urlRss = "https://vnexpress.net/rss/the-thao.rss";
         downloadTinTuc.execute(urlRss);
         return view;
     }

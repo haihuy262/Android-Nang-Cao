@@ -4,7 +4,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import huynhph30022.fpoly.assignmentmob201.R;
+import huynhph30022.fpoly.assignmentmob201.fragment.MusicFragment;
 import huynhph30022.fpoly.assignmentmob201.model.Song;
 import huynhph30022.fpoly.assignmentmob201.service.MusicService;
 
@@ -27,7 +30,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.ViewHolder> 
     private final TextView tvTitleBaiHat;
     private final RelativeLayout relativeLayoutControlMusic;
     private ArrayList<Song> list;
-    private ImageView imgPlayOrPause;
+    private final ImageView imgPlayOrPause;
 
     public MusicAdapter(Context context, TextView tvTitleBaiHat, RelativeLayout relativeLayoutControlMusic, ImageView imgPlayOrPause) {
         this.context = context;
